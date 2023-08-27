@@ -1,105 +1,129 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Media;
 using System.Windows.Forms;
 
 namespace AssetPacker
 {
-    public partial class packForm : Form
-    {
-        public packForm()
-        {
-            InitializeComponent();
-        }
+	public partial class packForm : Form
+	{
+		public packForm()
+		{
+			InitializeComponent();
+		}
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
+		private void Form1_Load(object sender, EventArgs e)
+		{
+		}
 
-        private void browseAddonPath_Click(object sender, EventArgs e)
-        {
-            addonPathBrowser.ShowDialog();
-        }
+		private void browseAddonPath_Click(object sender, EventArgs e)
+		{
+			var folderBrowser = new FolderBrowserDialog();
+			if (folderBrowser.ShowDialog() == DialogResult.OK)
+			{
+				addonPathBox.Text = folderBrowser.SelectedPath;
+			}
+			else
+			{
+				return;
+			}
 
-        private void AutoApplyFilePaths()
-        {
-            //if (!cfgPathBox.Text.Any())
-            {
-                var addonPath = addonPathBox.Text;
-                var searchKey = "hlvr_addons";
+			AutoApplyFilePaths();
+		}
 
-                var indexAddonRoot = addonPathBox.Text.IndexOf(searchKey);
-                var hlvrAddonsPath = addonPathBox.Text.Substring(0, indexAddonRoot + searchKey.Length);
+		private void AutoApplyFilePaths()
+		{
+			//if (!cfgPathBox.Text.Any())
+			{
+				var addonPath = addonPathBox.Text;
+				var searchKey = "hlvr_addons";
 
-                cfgPathBox.Text = hlvrAddonsPath;
-                cfgPathBox.Text += "\\hlvr.cfg";
+				var indexAddonRoot = addonPathBox.Text.IndexOf(searchKey);
+				var hlvrAddonsPath = addonPathBox.Text.Substring(0, indexAddonRoot + searchKey.Length);
 
-                packedAddonBox.Text = hlvrAddonsPath;
-            }
-        }
+				packedAddonBox.Text = hlvrAddonsPath;
+			}
+		}
 
-        private void browseCfgPath_Click(object sender, EventArgs e)
-        {
+		private void browsePackPath_Click(object sender, EventArgs e)
+		{
+			var folderBrowser = new FolderBrowserDialog();
+			if (folderBrowser.ShowDialog() == DialogResult.OK)
+			{
+				packedAddonBox.Text = folderBrowser.SelectedPath;
+			}
+			else
+			{
+				return;
+			}
+		}
 
-        }
+		private void packAddonButton_Click(object sender, EventArgs e)
+		{
+			PackAddon();
+		}
 
-        private void browsePackPath_Click(object sender, EventArgs e)
-        {
+		private void PackAddon()
+		{
 
-        }
+			var info = new AddonPacker.PackerInfo()
+			{
+				ProgressBar = packProgress,
+				AddonPath = addonPathBox.Text,
+				PackedAddonsPath = packedAddonBox.Text,
+				AddonSuffix = addonSuffixBox.Text,
+				MaxSize = (int)(Convert.ToDouble(addonMaxSizeBox.Text) * 1e9),
+				DeleteVrad3 = deleteVrad3.Checked,
+				DeleteBakedResourceCache = deleteBakedResourceCache.Checked,
+				DeleteSourceFilmmakerElements = deleteSFM.Checked,
+				DeleteScreenshots = deleteScreenshots.Checked,
+				DeleteSaves = deleteSaves.Checked,
+			};
+			var packer = new AddonPacker(info);
+			packer.Run();
 
-        private void packAddonButton_Click(object sender, EventArgs e)
-        {
-            PackAddon();
-        }
+			SoundPlayer finishSound = new SoundPlayer(@"c:\Windows\Media\Windows Background.wav");
+			finishSound.Play();
+		}
 
-        private void PackAddon()
-        {
-            var packer = new AddonPacker(addonPathBox.Text, cfgPathBox.Text, packedAddonBox.Text, addonSuffixBox.Text, addonMaxSizeBox.Text, deleteVrad3.Checked, deleteBakedResourceCache.Checked, copySoundManifest.Checked);
-            packer.Run();
-        }
+		private void label3_Click(object sender, EventArgs e)
+		{
 
-        private void addonPathBrowser_FileOk(object sender, CancelEventArgs e)
-        {
-            addonPathBox.Text = addonPathBrowser.FileName;
+		}
 
-            AutoApplyFilePaths();
-        }
+		private void addonPathBox_TextChanged(object sender, EventArgs e)
+		{
+			EvaluatePressButton();
+		}
 
-        private void label3_Click(object sender, EventArgs e)
-        {
+		private void cfgPathBox_TextChanged(object sender, EventArgs e)
+		{
+			EvaluatePressButton();
+		}
 
-        }
+		private void packedAddonBox_TextChanged(object sender, EventArgs e)
+		{
+			EvaluatePressButton();
+		}
 
-        private void addonPathBox_TextChanged(object sender, EventArgs e)
-        {
-            EvaluatePressButton();
-        }
+		private bool CanPressPack()
+		{
+			return addonPathBox.Text.Any() && packedAddonBox.Text.Any();
+		}
 
-        private void cfgPathBox_TextChanged(object sender, EventArgs e)
-        {
-            EvaluatePressButton();
-        }
+		private void EvaluatePressButton()
+		{
+			packAddonButton.Enabled = CanPressPack();
+		}
 
-        private void packedAddonBox_TextChanged(object sender, EventArgs e)
-        {
-            EvaluatePressButton();
-        }
+		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://paypal.me/gkaf");
+		}
 
-        private bool CanPressPack()
-        {
-            return addonPathBox.Text.Any() && cfgPathBox.Text.Any() && packedAddonBox.Text.Any();
-        }
-
-        private void EvaluatePressButton()
-        {
-            packAddonButton.Enabled = CanPressPack();
-        }
-    }
+		private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://www.gkaf.me");
+		}
+	}
 }
