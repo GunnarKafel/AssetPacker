@@ -1,0 +1,11 @@
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\bin\Debug\AssetPacker.exe.config
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\bin\Debug\AssetPacker.exe
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\bin\Debug\AssetPacker.pdb
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.csproj.AssemblyReference.cache
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.csproj.SuggestedBindingRedirects.cache
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.Properties.Resources.resources
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.csproj.GenerateResource.cache
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.csproj.CoreCompileInputs.cache
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.exe
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.pdb
+C:\Users\left4\source\repos\AssetPacker\AssetPacker\obj\Debug\AssetPacker.packForm.resources
