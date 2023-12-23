@@ -1,3 +1,5 @@
+Kaf Toolz Discord https://discord.gg/RGWaEpsMKJ
+
 # AssetPacker
 ![image](https://github.com/GunnarKafel/AssetPacker/assets/65134886/f1750253-9432-4e84-a0df-195bb6407c74)
 
